@@ -3,7 +3,7 @@ import numpy as np
 
 def Simpson_1_3(n: int,a: float,b: float, func) -> float: 
     """
-    Caclulating the integral of a function for given bounds
+    Calculating the integral of a function for given bounds
 
     Args:
         n (int): Number of subintervals
@@ -34,4 +34,24 @@ def Simpson_1_3(n: int,a: float,b: float, func) -> float:
     result = h/3*sum # Get the result
 
     return result
+
+def Romberg(n:int,a:float,b:float,func) -> float:
+    """
+    Calculating the integral of a function for given bounds
+
+    Args:
+        n (int): Number of subintervals
+        a (float): Lower bound of the integral
+        b (float): Upper bound of the integral
+        func : Function that needs to be integrated
+    
+    Result:
+        value (float): Value of the integration
+    """
+    I_1 = Simpson_1_3(n,a,b,func) #Calculate two integrals via Simpson
+    I_2 = Simpson_1_3(2*n,a,b,func)
+    
+    value = I_2 + (I_2 - I_1) / (2**4 - 1) #Error correction
+
+    return value
 

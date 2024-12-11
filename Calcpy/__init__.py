@@ -1,1 +1,1 @@
-from .numint import Simpson_1_3
+from .numint import Simpson_1_3, Romberg
