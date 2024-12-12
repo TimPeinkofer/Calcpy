@@ -1,9 +1,26 @@
 import numpy as np
 
 
+def precalc(n:int, a: int, b:int) -> float, list:
+    """
+    Calculating the stepsize and the x_values
+
+    Args:
+        n (int): Number of subintervals
+        a (float): Lower bound of the integral
+        b (float): Upper bound of the integral
+    
+    Result:
+        h (float): Stepsize
+        x_values (list): x values 
+    """
+    h = (b-a)/(n-1) #Caclulating values for integration
+    x_values = np.linspace(a,b, n)
+    return h, x_values
+
 def Simpson_1_3(n: int,a: float,b: float, func) -> float: 
     """
-    Calculating the integral of a function for given bounds
+    Calculating the integral of a function for given bounds via Simpson 1/3
 
     Args:
         n (int): Number of subintervals
@@ -14,9 +31,8 @@ def Simpson_1_3(n: int,a: float,b: float, func) -> float:
     Result:
         result (float): Value of the integration
     """
-
-    h = (b-a)/(n-1) #Caclulating values for integration
-    x_values = np.linspace(a,b, n)
+    h, x_values = precalc(n,a,b)
+    
     f_values = [func(x_i) for x_i in x_values]
 
     sum = 0
@@ -37,7 +53,7 @@ def Simpson_1_3(n: int,a: float,b: float, func) -> float:
 
 def Romberg(n:int,a:float,b:float,func) -> float:
     """
-    Calculating the integral of a function for given bounds
+    Calculating the integral of a function for given bounds via Romberg
 
     Args:
         n (int): Number of subintervals
