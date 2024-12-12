@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def precalc(n:int, a: int, b:int) -> float, list:
+def precalc(n:int, a: int, b:int):
     """
     Calculating the stepsize and the x_values
 
@@ -71,3 +71,85 @@ def Romberg(n:int,a:float,b:float,func) -> float:
 
     return value
 
+
+# Transformation for our used Intervall
+def transform_G_L(x, b, a):
+    return 0.5*(b - a) * x + 0.5*(b + a)
+
+
+
+gauss_legendre_data = {
+    1: {
+        "points": [0],
+        "weights": [2.0]
+    },
+    2: {
+        "points": [-1 / 3**0.5, 1 / 3**0.5],  # ±1/√3
+        "weights": [1.0, 1.0]
+    },
+    3: {
+        "points": [0, -(3 / 5)**0.5, (3 / 5)**0.5],  # 0, ±√3/5
+        "weights": [8 / 9, 5 / 9, 5 / 9]
+    },
+    4: {
+        "points": [
+            -(3 / 7 - 2 / 7 * (6 / 5)**0.5)**0.5,
+            (3 / 7 - 2 / 7 * (6 / 5)**0.5)**0.5,
+            -(3 / 7 + 2 / 7 * (6 / 5)**0.5)**0.5,
+            (3 / 7 + 2 / 7 * (6 / 5)**0.5)**0.5
+        ],  # ±(3/7 ± 2/7 * √6/5)^(1/2)
+        "weights": [
+            (18 + 30**0.5) / 36,
+            (18 + 30**0.5) / 36,
+            (18 - 30**0.5) / 36,
+            (18 - 30**0.5) / 36
+        ]
+    },
+    5: {
+        "points": [
+            -1 / 3 * (5 - 2 * (10 / 7)**0.5)**0.5,
+            1 / 3 * (5 - 2 * (10 / 7)**0.5)**0.5,
+            -1 / 3 * (5 + 2 * (10 / 7)**0.5)**0.5,
+            1 / 3 * (5 + 2 * (10 / 7)**0.5)**0.5,
+            0
+        ],  # ±(1/3 * √(5 ± 2√10/7))
+        "weights": [
+            (322 + 13 * 70**0.5) / 900,
+            (322 + 13 * 70**0.5) / 900,
+            (322 - 13 * 70**0.5) / 900,
+            (322 - 13 * 70**0.5) / 900,
+            128 / 225
+        ]
+    }
+}
+
+
+# Gauß-Legendre function
+def Gauss_legendre(a:float,b:float, n:int, func)-> float:
+    """
+    Calculating the integral of a function for given bounds via Gauß-Legendre
+
+    Args:
+        a (float): Lower bound of the integral
+        b (float): Upper bound of the integral
+        n (int): Number of subintervals
+        func : Function that needs to be integrated
+    
+    Result:
+        res (float): Value of the integration
+    """
+    sum = 0
+
+    if n > 5 or n<1:
+        return ValueError("Please use a number from 1 to 5")
+    
+    A = gauss_legendre_data[n]["weights"]
+    x_v = gauss_legendre_data[n]["points"]
+    x_transformed = [transform_G_L(r, b, a) for r in x_v]  # Transform nodes for use
+    
+    for i in range(len(x_transformed)):
+        sum += A[i] * func(x_transformed[i])  # Calculate the values with the weigths and nodes
+
+    res = 0.5 * (b - a) * sum  # Multiply by the scaling factor
+
+    return res
