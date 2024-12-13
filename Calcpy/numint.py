@@ -1,4 +1,6 @@
 import numpy as np
+from Errorcalc import IntegrationMethodError
+
 
 
 def precalc(n:int, a: int, b:int):
@@ -14,9 +16,11 @@ def precalc(n:int, a: int, b:int):
         h (float): Stepsize
         x_values (list): x values 
     """
+    n = int(n)
     h = (b-a)/(n-1) #Caclulating values for integration
     x_values = np.linspace(a,b, n)
     return h, x_values
+
 
 def Simpson_1_3(n: int,a: float,b: float, func) -> float: 
     """
@@ -49,7 +53,10 @@ def Simpson_1_3(n: int,a: float,b: float, func) -> float:
     
     result = h/3*sum # Get the result
 
-    return result
+    return result 
+
+
+
 
 def Romberg(n:int,a:float,b:float,func) -> float:
     """
@@ -154,6 +161,7 @@ def Gauss_legendre(a:float,b:float, n:int, func)-> float:
 
     return res
 
+
 def Newton_cotes(n:int,a:float,b:float, func)-> float:
     """
     Calculating the integral of a function for given bounds via Newton_Cotes
@@ -204,4 +212,5 @@ def Trapezoidal(n:int,a:float,b:float,func)-> float:
     I=h/2*(y[0]+2*sum+y[-1]) #Calculating the integral
 
     return I
+
 
