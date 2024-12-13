@@ -153,3 +153,55 @@ def Gauss_legendre(a:float,b:float, n:int, func)-> float:
     res = 0.5 * (b - a) * sum  # Multiply by the scaling factor
 
     return res
+
+def Newton_cotes(n:int,a:float,b:float, func)-> float:
+    """
+    Calculating the integral of a function for given bounds via Newton_Cotes
+
+    Args:
+        a (float): Lower bound of the integral
+        b (float): Upper bound of the integral
+        n (int): Number of subintervals
+        func : Function that needs to be integrated
+    
+    Result:
+        sum_integral (float): Value of the integration
+    """
+
+    h, x_values = precalc(n,a,b)
+    
+    f_v = [func(x_i) for x_i in x_values]
+    sum_integral = 0
+
+    for i in range(0, n - 2, 2):  # Calculating the value for every odd step
+        sum_1 = f_v[i] + 4 * f_v[i + 1] + f_v[i + 2]
+        sum_integral += h/3 * sum_1
+
+    return sum_integral
+
+
+def Trapezoidal(n:int,a:float,b:float,func)-> float:
+    """
+    Calculating the integral of a function for given bounds via Trapezoidal rule
+
+    Args:
+        a (float): Lower bound of the integral
+        b (float): Upper bound of the integral
+        n (int): Number of subintervals
+        func : Function that needs to be integrated
+    
+    Result:
+        I (float): Value of the integration
+    """
+
+    h, x_values = precalc(n,a,b)
+    sum = 0
+    y=[func(x_i) for x_i in x_values]
+
+    for i in range(1,n): #Calculating the middle values
+        sum += y[i]
+
+    I=h/2*(y[0]+2*sum+y[-1]) #Calculating the integral
+
+    return I
+
