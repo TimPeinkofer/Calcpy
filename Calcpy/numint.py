@@ -1,5 +1,4 @@
 import numpy as np
-from Errorcalc import IntegrationMethodError
 
 
 
@@ -214,21 +213,3 @@ def Trapezoidal(n:int,a:float,b:float,func)-> float:
     return I
 
 
-def error(method, a:float,b:float,func,approx_result:float) -> float:
-    """
-    Calculating the error of our integration
-
-    Args:
-        method: Method used for the calculation of the approximated value
-        a (float): Lower bound of the integral
-        b (float): Upper bound of the integral
-        func : Function that needs to be integrated
-        approx_result (float) : approximated result of the integration
-    
-    Result:
-        error (float): Error of our integration
-    """
-    err_func = IntegrationMethodError(method,a,b,func)
-    error = err_func.calculate()
-    error = error.error(approx_result)
-    return error
