@@ -5,9 +5,10 @@ def Gauss_elimination(matrix, vector): # Function for gauß elimination
     # Generate a copy of the vector and the matrix for our gauß algorithm
     U_Matrix = np.copy(matrix)
     U_vector = np.copy(vector)
-    x = np.zeros((rows, 1)) # Generate a solution vektor based on the number of rows of our matrix
+    
 
     rows, columns = matrix.shape
+    x = np.zeros((rows, 1)) # Generate a solution vektor based on the number of rows of our matrix
     
     for i in range(rows - 1):
 
@@ -40,7 +41,7 @@ def Gauss_elimination(matrix, vector): # Function for gauß elimination
     
 
 # Calculate the function with different overrelaxation factors
-def overralxation(A,b,Max_iterations):
+def overrelaxation(A,b,Max_iterations):
     for factor in np.arange(1, 2, 0.1):  
         result = overrelax_calc(A, b, Max_iterations, factor)
         if result is not None:

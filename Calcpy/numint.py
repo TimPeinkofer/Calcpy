@@ -213,3 +213,40 @@ def Trapezoidal(n:int,a:float,b:float,func)-> float:
     return I
 
 
+def Simpson_3_8(n:int,a:float,b:float,f) -> float: #noch zu machen
+
+    #divide the intervall n into two, where n1 is multible of 3
+    n1 = (n // 3) * 3
+    n2 = n - n1
+    
+    x=np.linspace(a,b,n+1)
+    m1,m2,m3=0,0,0
+    y=f(x)
+
+    #h for the intervall n1 
+    h1 = (x[n1] - a) / n1  
+    #h for the intervall n2
+    if n2 > 0:
+        h2 = (b - x[n1]) / n2   
+    else:
+        h2 =0
+
+    #calculate m1 
+    for i in range(1,n1,3):
+        m1 += y[i]
+    #calculate m2
+    for i in range(2,n1,3):
+        m2 += y[i]
+    #calculate m3
+    for i in range(3,n1,3):
+        m3 += y[i]
+
+    I_Simpson=(3*h1/8)*(y[0]+ 3*m1 + 3*m2 + 2*m3 +y[n1])
+
+    # calculate the rest with trapezoidal rule 
+    if n2 > 0:
+        I_Trapezoid = (h2 / 2) * (y[n1] + y[-1])
+    else:
+         I_Trapezoid = 0
+
+    return I_Simpson + I_Trapezoid
