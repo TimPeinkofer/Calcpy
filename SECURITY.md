@@ -37,4 +37,3 @@ Thank you for helping us improve the security of our project!
 
 ---
 
-This version guides users to report vulnerabilities via GitHub issues, which should help streamline the process for you.
