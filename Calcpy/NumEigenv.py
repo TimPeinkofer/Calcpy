@@ -18,7 +18,6 @@ def matrix_vector(N, Matrix, Vector):
             Solution[i] += Matrix[i][j] * Vector[j]
     return Solution
 
-
 def Eigenvalue_calc(mat, vec, Iteration):
     """
     Compute an eigenvalue and eigenvector using power iteration.
@@ -35,11 +34,11 @@ def Eigenvalue_calc(mat, vec, Iteration):
 
     for _ in range(Iteration):
         vec = matrix_vector(size, mat, vec)
+        vec = vec / np.linalg.norm(vec)  # Normalize the vector to prevent overflow
 
-    eigenvalue = vec / np.dot(vec, vec)
-    eigenvector = vec / np.linalg.norm(vec)
+    eigenvalue = np.dot(matrix_vector(size, mat, vec), vec) / np.dot(vec, vec)
+    eigenvector = vec
     return eigenvalue, eigenvector
-
 
 def Eigenvalues(mat, vec, Iteration):
     """
@@ -69,7 +68,6 @@ def Eigenvalues(mat, vec, Iteration):
 
     return eigenvalues, eigenvectors
 
-
 def Aitken(Eigenvalues):
     """
     Apply Aitken's delta-squared process for accelerated convergence.
@@ -85,7 +83,6 @@ def Aitken(Eigenvalues):
     else:
         x_n, x_n1, x_n2 = Eigenvalues[-3], Eigenvalues[-2], Eigenvalues[-1]
         return x_n - (x_n1 - x_n) ** 2 / (x_n2 - 2 * x_n1 + x_n)
-
 
 def eigenvalue_calc_aitken(mat, vec, Iteration):
     """
@@ -104,7 +101,7 @@ def eigenvalue_calc_aitken(mat, vec, Iteration):
 
     for i in range(Iteration):
         vec = matrix_vector(size, mat, vec)
-        eigenvector = vec / np.linalg.norm(vec)
+        vec = vec / np.linalg.norm(vec)
         eigenvalue = np.dot(matrix_vector(size, mat, vec), vec) / np.dot(vec, vec)
         EVArray.append(eigenvalue)
 
@@ -114,8 +111,7 @@ def eigenvalue_calc_aitken(mat, vec, Iteration):
             eigenvalue = Aitken_Eigenvalue
             break
 
-    return eigenvalue, eigenvector
-
+    return eigenvalue, vec
 
 def Eigenvalues_Aitken(mat, vec, Iteration):
     """

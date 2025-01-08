@@ -1,6 +1,6 @@
 import numint, numdiff
 
-class IntegrationMethodError:
+class IntegrationandDiffMethodError:
     def __init__(self, method, a: float, b: float, func):
         """
         Initialisiert die Integrationsmethode.
@@ -18,7 +18,7 @@ class IntegrationMethodError:
         self.func = func
         self.exact = None
 
-    def calculate(self):
+    def calculate_exact(self):
         """
         Führt die numerische Integration durch und speichert das Ergebnis.
 
@@ -28,7 +28,7 @@ class IntegrationMethodError:
         self.exact = self.method(self.n, self.a, self.b, self.func)
         return self.exact
 
-    def error(self, approx_value: float) -> float:
+    def calculate_error(self, approx_value: float) -> float:
         """
         Berechnet den Fehler der numerischen Integration, falls der exakte Wert bekannt ist.
 
@@ -39,25 +39,25 @@ class IntegrationMethodError:
             float: Der Fehler der numerischen Integration
         """
         if self.exact is None:
-            self.calculate()
+            self.calculate_exact()
         return abs(approx_value - self.exact)
 
 
-def error(method, a:float,b:float,func,approx_result:float) -> float:
+def error(method, a: float, b: float, func, approx_result: float) -> float:
     """
-    Calculating the error of our integration
+    Berechnet den Fehler der numerischen Integration.
 
     Args:
-        method: Method used for the calculation of the approximated value
-        a (float): Lower bound of the integral
-        b (float): Upper bound of the integral
-        func : Function that needs to be integrated
-        approx_result (float) : approximated result of the integration
+        method: Methode, die für die Berechnung des approximierten Werts verwendet wird
+        a (float): Untere Grenze des Integrals
+        b (float): Obere Grenze des Integrals
+        func: Funktion, die integriert werden muss
+        approx_result (float): Der approximierte Wert des Integrals
     
-    Result:
-        error (float): Error of our integration
+    Returns:
+        error (float): Fehler der numerischen Integration
     """
-    err_func = IntegrationMethodError(method,a,b,func)
-    error = err_func.calculate()
-    error = error.error(approx_result)
-    return error
+    err_func = IntegrationandDiffMethodError(method, a, b, func)
+    exact_value = err_func.calculate_exact()  # Calculate exact value
+    error_value = err_func.calculate_error(approx_result)  # Calculate the error
+    return error_value
