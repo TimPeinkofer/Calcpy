@@ -1,7 +1,8 @@
 from .numint import Simpson_1_3, Romberg, Gauss_legendre, Newton_cotes, Trapezoidal, Simpson_3_8
-from .numdiff_WOP import Central_diff_first_deri
+from .numdiff import Central_diff_first_deri, Richardson
 from .Errorcalc import error
-from .NumLinEqu import Gauss_elimination, overrelaxation
-from .NonLinEq import newtons_method, solve_fixed_point, linear_interpolation
+from .NumLinEqu import Gauss_elimination, overrelaxation, determinant
+from .NonLinEq import newtons_method, solve_fixed_point, linear_interpolation, newton_halley
 from .NumEigenv import Eigenvalues, Eigenvalues_Aitken
-from .ODE import Heun, Adam, adam_corrector, adam_ode_int, adam_predictor, runge_kutta
+from .BVP import solve_by_shooting, Matrix_method
+from .ODE import Heun, adam_corrector, adam_ode_int, adam_predictor, Adam, runge_kutta

@@ -1,6 +1,6 @@
 import numpy as np
 
-def newtons_method(f, df, x0: float, max_iter: int, epsilon=1e-6) -> float:
+def newtons_method(f:function, df:function, x0: float, max_iter: int, epsilon=1e-6) -> float:
     """
     Find the root of a function using Newton's method.
 
@@ -12,7 +12,7 @@ def newtons_method(f, df, x0: float, max_iter: int, epsilon=1e-6) -> float:
         epsilon (float): Convergence criterion.
 
     Returns:
-        float: Approximation of the root, or None if no convergence.
+        x (float): Approximation of the root, or None if no convergence.
     """
     x = x0
     for _ in range(max_iter):
@@ -32,7 +32,7 @@ def newtons_method(f, df, x0: float, max_iter: int, epsilon=1e-6) -> float:
     return None
 
 
-def linear_interpolation(f, x0: float, x1: float, max_iter: int, epsilon=1e-6) -> float:
+def linear_interpolation(f:function, x0: float, x1: float, max_iter: int, epsilon=1e-6) -> float:
     """
     Find the root of a function using linear interpolation.
 
@@ -44,7 +44,7 @@ def linear_interpolation(f, x0: float, x1: float, max_iter: int, epsilon=1e-6) -
         epsilon (float): Convergence criterion.
 
     Returns:
-        float: Approximation of the root, or None if no convergence.
+        x2 (float): Approximation of the root, or None if no convergence.
     """
     for _ in range(max_iter):
         f0, f1 = f(x0), f(x1)
@@ -65,7 +65,7 @@ def linear_interpolation(f, x0: float, x1: float, max_iter: int, epsilon=1e-6) -
     return None
 
 
-def solve_fixed_point(f1, f2, x_init: float, y_init: float, max_iter: int, tol=1e-8):
+def solve_fixed_point(f1:function, f2:function, x_init: float, y_init: float, max_iter: int, tol=1e-8) -> tuple[float,float]:
     """
     Solve a system of equations using fixed-point iteration.
 
@@ -94,3 +94,36 @@ def solve_fixed_point(f1, f2, x_init: float, y_init: float, max_iter: int, tol=1
 
     print("Did not converge.")
     return None, None
+
+def newton_halley(f:function, df:function, d2f:function, x0: float, max_iter: int, epsilon=1e-6) -> float:
+    """
+    Find the root of a function using Newton-Halley method.
+
+    Args:
+        f (function): Function for which the root is to be found.
+        df (function): First derivative of the function.
+        d2f (function): Second derivative of the function.
+        x0 (float): Initial guess.
+        max_iter (int): Maximum number of iterations.
+        epsilon (float): Convergence criterion.
+
+    Returns:
+        x (float): Approximation of the root, or None if no convergence.
+    """
+    x = x0
+    for _ in range(max_iter):
+        fx = f(x)
+        dfx = df(x)
+        d2fx = d2f(x)
+
+        if np.abs(fx) < epsilon:
+            return x
+
+        if dfx == 0:
+            print("Derivative is zero. Cannot proceed.")
+            return None
+
+        x -= (2*fx*dfx)/(2*dfx**2-d2fx*fx)
+
+    print("Did not converge.")
+    return None
