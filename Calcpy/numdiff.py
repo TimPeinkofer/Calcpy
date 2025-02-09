@@ -1,3 +1,4 @@
+from Interpolation import cubic_splines, h
 
 def Central_diff_first_deri(x:float, h:float, func:function) -> float:
     """
@@ -50,3 +51,29 @@ def Richardson(x:float, h:float, func:function) -> float:
 
     value = psi(h, x, func)
     return value
+
+
+def spline_derivative(i, x_val, x, func):
+    n = len(x) - 1
+    _, _, sol = cubic_splines(n, x, func)
+    if sol is None:
+        
+        values = func(x)
+        
+        if x[i] <= x_val <= x[i + 1]:
+            h_i = h(i, x)  # Schrittweite zwischen x[i] und x[i + 1]
+            
+            # Berechnung der Koeffizienten a, b, c für das Intervall [x[i], x[i+1]]
+            a = (sol[i + 1] - sol[i]) / (6 * h_i)
+            b = sol[i] / 2
+            c = (values[i + 1] - values[i]) / h_i - h_i / 6 * (2 * sol[i] + sol[i + 1])
+            
+            # Berechnung der ersten Ableitung des Splines an der Stelle x_val
+            derivative = 3 * a * (x_val - x[i]) ** 2 + 2 * b * (x_val - x[i]) + c
+            return derivative
+        else:
+            print(f"x_val = {x_val} liegt außerhalb des Intervalls [{x[i]}, {x[i + 1]}]")
+            return None
+    
+    else:
+        print("No solution found")

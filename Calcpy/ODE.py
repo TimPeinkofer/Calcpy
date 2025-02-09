@@ -213,3 +213,30 @@ def runge_kutta(x_start: float, x_end: float, y_0: float, n: int, f, plotchoose:
 
     sol_plot(x_values, np.array(y_values), plotchoose)
     return x_values, np.array(y_values)
+
+
+def systems_of_ODE(system, y0:list, t:list) -> list:
+    """
+    ODE System solver based ona Runge-Kutta 4th order algorithm.
+
+    Args:
+      system : ODE equation system.
+      y0 (list): List of boundary conditions.
+      t (list): List of t values
+    
+    Return:
+      
+    
+    """
+    n = len(t)
+    h = t[1] - t[0]  # Calculate step size
+    y = np.zeros((n, len(y0)))
+    y[0] = y0
+    
+    for i in range(1, n):
+        k1 = system(y[i - 1], t[i - 1])
+        k2 = system(y[i - 1] + h * k1 / 2, t[i - 1] + h / 2)
+        k3 = system(y[i - 1] + h * k2 / 2, t[i - 1] + h / 2)
+        k4 = system(y[i - 1] + h * k3, t[i - 1] + h)
+        y[i] = y[i - 1] + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6
+    return y
