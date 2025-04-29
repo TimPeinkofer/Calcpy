@@ -10,11 +10,6 @@ currently being supported with security updates.
 | v0.1-alpha | yes |
 
 
-## Reporting a Vulnerability
-
-Here’s an updated version of the "Reporting a Vulnerability" section, reflecting that the report should be made via GitHub:
-
----
 
 ## Reporting a Vulnerability
 
