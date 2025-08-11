@@ -66,7 +66,7 @@ def overrelaxation(A: np.ndarray, b: np.ndarray, Max_iterations: int):
         print(f"Best solution found with w = {best_w:.1f}")
     return best_solution
 
-def overrelax_calc(m: np.ndarray, vector: np.ndarray, iterations: int, w: float, tol=1e-3) -> np.ndarray:
+def overrelax_calc(m: np.ndarray, vector: np.ndarray, iterations: int, w: float, tol=1e-6) -> np.ndarray:
     """
     Perform over-relaxation calculation for a given relaxation factor.
 
@@ -132,3 +132,91 @@ def determinant(matrix: np.ndarray) -> float:
         det *= U_Matrix[i, i]
     
     return det * (-1) ** swaps
+
+
+def gauss_seidel(m: np.ndarray, vector: np.ndarray, init_val: list,max_iter: int, tol=1e-6) -> np.ndarray:
+    """
+    Solve a linear system using the Gauss-Seidel method.
+
+    Args:
+        m (numpy.ndarray): Coefficient matrix.
+        vector (numpy.ndarray): Right-hand side vector.
+        init_val (list): Initial guess for the solution.
+        max_iter (int): Maximum number of iterations.
+        tol (float): Convergence tolerance.
+
+    Returns:
+        numpy.ndarray: Solution vector if convergence is achieved, otherwise raises an error.
+    """
+    rows, _ = m.shape
+    x_old = np.array(init_val, dtype=float)
+
+    for _ in range(max_iter):
+        x_new = x_old.copy()
+
+        for i in range(rows):
+            if m[i, i] == 0:
+                raise ValueError("Diagonal element is zero, cannot proceed with Gauss-Seidel.")
+
+            x_new[i] = (vector[i] 
+                        - np.dot(m[i, :i], x_new[:i]) 
+                        - np.dot(m[i, i+1:], x_old[i+1:])) / m[i, i]
+
+        x_new = np.where(np.isnan(x_new), 0, x_new)  # NaN durch 0 ersetzen
+
+        if np.linalg.norm(x_new - x_old, ord=np.inf) < tol:
+            return x_new
+
+        x_old = x_new
+
+    raise RuntimeError("Gauss-Seidel did not converge within the maximum number of iterations.")
+
+
+def Gauss_Jordan(A: np.ndarray) -> np.ndarray:
+    """
+    Perform Gauss-Jordan elimination on a matrix.
+
+    Args:
+        A (numpy.ndarray): The augmented matrix to be reduced.
+
+    Returns:
+        numpy.ndarray: The reduced row echelon form of the matrix.
+    """
+    rows, _ = A.shape
+    for i in range(rows):
+        # Make the diagonal contain all 1s
+        diag = A[i, i]
+        if np.isclose(diag, 0):
+            raise ValueError("Matrix is singular or nearly singular.")
+        A[i] = A[i] / diag
+        
+        # Make the other rows contain 0s in the current column
+        for j in range(rows):
+            if j != i:
+                A[j] -= A[j, i] * A[i]
+    
+    return A
+
+
+
+def inverse_matrix(A: np.ndarray) -> np.ndarray:
+    """
+    Calculate the inverse of a matrix using the Gauss-Jordan elimination method.
+
+    Args:
+        A (numpy.ndarray): The input matrix to invert.
+
+    Returns:
+        numpy.ndarray: The inverse of the input matrix.
+    """
+    n = A.shape[0]
+    if A.shape[0] != A.shape[1]:
+        raise ValueError("Matrix must be square to compute its inverse.")
+    
+    aug = np.hstack((A.astype(float), np.eye(n)))
+    
+
+    result = Gauss_Jordan(aug)
+    
+
+    return result[:, n:]
