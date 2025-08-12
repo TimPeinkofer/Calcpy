@@ -6,7 +6,7 @@ import os
 
 # Add the path to the numint module
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Calcpy')))
-from NonLinEq import newtons_method, linear_interpolation, solve_fixed_point
+from NonLinEq import newtons_method, linear_interpolation, solve_fixed_point, bisection_method
 
 class TestRootFindingMethods(unittest.TestCase):
 
@@ -40,6 +40,25 @@ class TestRootFindingMethods(unittest.TestCase):
         self.assertIsNotNone(y, "Fixed-point iteration did not converge.")
         self.assertAlmostEqual(x, 1.0, places=5, msg="Fixed-point iteration returned an incorrect x.")
         self.assertAlmostEqual(y, 1.0, places=5, msg="Fixed-point iteration returned an incorrect y.")
+
+def f_test(x):
+    return x**2 - 4  # Nullstellen bei x = -2 und x = 2
+
+class TestBisectionMethod(unittest.TestCase):
+    def test_root_positive(self):
+        root = bisection_method(0, 5, f_test, max_iter=100, eps=1e-6)
+        self.assertIsNotNone(root, "Root should not be None")
+        self.assertAlmostEqual(root, 2.0, places=6)
+
+    def test_root_negative(self):
+        root = bisection_method(-5, 0, f_test, max_iter=100, eps=1e-6)
+        self.assertIsNotNone(root, "Root should not be None")
+        self.assertAlmostEqual(root, -2.0, places=6)
+
+    def test_no_root(self):
+        root = bisection_method(3, 5, f_test, max_iter=100, eps=1e-6)
+        self.assertIsNone(root, "Expected None for interval without a root")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,6 @@
 import numpy as np
 
-def newtons_method(f:function, df:function, x0: float, max_iter: int, epsilon=1e-6) -> float:
+def newtons_method(f, df, x0: float, max_iter: int, epsilon=1e-6) -> float:
     """
     Find the root of a function using Newton's method.
 
@@ -32,7 +32,7 @@ def newtons_method(f:function, df:function, x0: float, max_iter: int, epsilon=1e
     return None
 
 
-def linear_interpolation(f:function, x0: float, x1: float, max_iter: int, epsilon=1e-6) -> float:
+def linear_interpolation(f, x0: float, x1: float, max_iter: int, epsilon=1e-6) -> float:
     """
     Find the root of a function using linear interpolation.
 
@@ -65,7 +65,7 @@ def linear_interpolation(f:function, x0: float, x1: float, max_iter: int, epsilo
     return None
 
 
-def solve_fixed_point(f1:function, f2:function, x_init: float, y_init: float, max_iter: int, tol=1e-8) -> tuple[float,float]:
+def solve_fixed_point(f1, f2, x_init: float, y_init: float, max_iter: int, tol=1e-8) -> tuple[float,float]:
     """
     Solve a system of equations using fixed-point iteration.
 
@@ -95,7 +95,7 @@ def solve_fixed_point(f1:function, f2:function, x_init: float, y_init: float, ma
     print("Did not converge.")
     return None, None
 
-def newton_halley(f:function, df:function, d2f:function, x0: float, max_iter: int, epsilon=1e-6) -> float:
+def newton_halley(f, df, d2f, x0: float, max_iter: int, epsilon=1e-6) -> float:
     """
     Find the root of a function using Newton-Halley method.
 
@@ -124,6 +124,38 @@ def newton_halley(f:function, df:function, d2f:function, x0: float, max_iter: in
             return None
 
         x -= (2*fx*dfx)/(2*dfx**2-d2fx*fx)
+
+    print("Did not converge.")
+    return None
+
+
+def bisection_method(x1: float, x2: float, f, max_iter: int, eps=1e-6) -> float:
+    """
+    Solving nonlinear equations with bisection method.
+
+    Args:
+        x1 (float): Lower bound of the interval.
+        x2 (float): Upper bound of the interval.
+        f (function): Function for which the root is to be found.
+        max_iter (int): Maximum number of iterations.
+        eps (float): Convergence criterion.
+
+    Returns:
+        float: Approximation of the root, or None if no convergence.
+    """
+    x_new = (x1+x2)/2
+    for _ in range(max_iter):
+
+        if f(x_new)*f(x1) < 0:
+            x2 = x_new
+        
+        elif f(x_new)*f(x2) < 0:
+            x1 = x_new
+        
+        x_new = (x1+x2)/2
+
+        if np.abs(f(x_new)) < eps:
+            return x_new
 
     print("Did not converge.")
     return None

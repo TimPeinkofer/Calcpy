@@ -1,6 +1,6 @@
 from Interpolation import cubic_splines, h
 
-def Central_diff_first_deri(x:float, h:float, func:function) -> float:
+def Central_diff_first_deri(x:float, h:float, func) -> float:
     """
     Function to calculate the first derivative via Central differences.
 
@@ -35,7 +35,7 @@ def psi(h, x, func):
 
 
 # Richardson Extrapolation
-def Richardson(x:float, h:float, func:function) -> float:
+def Richardson(x:float, h:float, func) -> float:
     """
     Function to calculate the derivative via Richardson extrapolation.
 

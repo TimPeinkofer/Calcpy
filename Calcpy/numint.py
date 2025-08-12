@@ -65,7 +65,7 @@ def precalc(n: int, a: float, b: float)-> tuple[float, list]:
     return h, x_values
 
 
-def Simpson_1_3(n: int, a: float, b: float, func:function) -> float:
+def Simpson_1_3(n: int, a: float, b: float, func) -> float:
     """
     Calculating the integral of a function for given bounds via Simpson 1/3
 
@@ -93,7 +93,7 @@ def Simpson_1_3(n: int, a: float, b: float, func:function) -> float:
     return result
 
 
-def Romberg(n: int, a: float, b: float, func:function) -> float:
+def Romberg(n: int, a: float, b: float, func) -> float:
     """
     Calculating the integral of a function for given bounds via Romberg
 
@@ -117,7 +117,7 @@ def transform_G_L(x, b, a):
 
 
 # Gauß-Legendre function
-def Gauss_legendre(a: float, b: float, n: int, func:function) -> float:
+def Gauss_legendre(a: float, b: float, n: int, func) -> float:
     """
     Calculating the integral of a function for given bounds via Gauß-Legendre
 
@@ -142,7 +142,7 @@ def Gauss_legendre(a: float, b: float, n: int, func:function) -> float:
     return res
 
 
-def Newton_cotes(n: int, a: float, b: float, func:function) -> float:
+def Newton_cotes(n: int, a: float, b: float, func) -> float:
     """
     Calculating the integral of a function for given bounds via Newton-Cotes
 
@@ -165,7 +165,7 @@ def Newton_cotes(n: int, a: float, b: float, func:function) -> float:
     return sum_integral
 
 
-def Trapezoidal(n: int, a: float, b: float, func:function) -> float:
+def Trapezoidal(n: int, a: float, b: float, func) -> float:
     """
     Calculating the integral of a function for given bounds via Trapezoidal rule
 
@@ -185,7 +185,7 @@ def Trapezoidal(n: int, a: float, b: float, func:function) -> float:
     return I
 
 
-def Simpson_3_8(n: int, a: float, b: float, func:function) -> float:
+def Simpson_3_8(n: int, a: float, b: float, func) -> float:
     """
     Calculating the integral of a function for given bounds via Simpson's 3/8 rule
 
