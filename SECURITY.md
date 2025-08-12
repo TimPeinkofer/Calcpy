@@ -7,7 +7,9 @@ currently being supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| v0.1-alpha | yes |
+| v0.1-alpha | no |
+| v0.2-alpha | no |
+| v0.2-beta | yes |
 
 
 
