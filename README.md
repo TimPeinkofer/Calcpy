@@ -167,6 +167,106 @@ Constructs cubic splines for interpolation.
 
 ---
 
+## Numerical ODE Solvers
+
+This project provides several numerical algorithms for solving **ordinary differential equations (ODEs)** and systems of ODEs.  
+Implemented methods include:
+
+- **Heun’s Method** (improved Euler)
+- **Adams–Bashforth Predictor**
+- **Adams–Moulton Corrector**
+- **Adams Predictor–Corrector Combination**
+- **Classical Adams Method**
+- **Runge–Kutta 4th Order Method**
+- **Runge–Kutta for ODE Systems**
+
+---
+
+### Functions
+
+#### 1. `precalc(xm, x0, n)`
+Pre-computes grid points and step size.  
+- **Args:**  
+  - `xm`: Final value of `x`  
+  - `x0`: Initial value of `x`  
+  - `n`: Number of steps  
+- **Returns:**  
+  - `x`: Grid points  
+  - `y`: Zero-initialized solution array  
+  - `h`: Step size  
+
+---
+
+#### 2. `sol_plot(x, y, plotchoose)`
+Plots the numerical solution if `plotchoose=True`.  
+
+---
+
+#### 3. `Heun(x0, xm, y0, n, f, plotchoose)`
+Solves an ODE with **Heun’s method** (2nd order).  
+- **Args:**  
+  - `x0`, `xm`: Interval boundaries  
+  - `y0`: Initial value of `y`  
+  - `n`: Number of steps  
+  - `f`: Derivative function `f(x, y)`  
+  - `plotchoose`: Whether to plot the solution  
+- **Returns:**  
+  - `x`: Grid points  
+  - `y`: Solution values  
+
+---
+
+#### 4. `adam_predictor(f, y_0, x_0, x_m, n, plotchoose)`
+Computes ODE solution using **Adams–Bashforth predictor**.  
+- Uses **Heun’s method** to generate the first three values.  
+- **Returns:**  
+  - `x`: Grid points  
+  - `y_pred`: Predicted values  
+
+---
+
+#### 5. `adam_corrector(f, y_values, x, n, h, plotchoose)`
+Corrects predicted values using **Adams–Moulton method**.  
+- **Returns:**  
+  - `y_corr`: Corrected values  
+
+---
+
+#### 6. `adam_ode_int(f, y_0, x0, xm, n, plotchoose)`
+Predictor–Corrector method combining **Adams–Bashforth** and **Adams–Moulton**.  
+- **Returns:**  
+  - `y_corr`: Corrected values  
+  - `y_pred`: Predicted values  
+
+---
+
+#### 7. `Adam(x0, xm, y0, n, f, plotchoose)`
+Classical **Adams method** using previous three steps for prediction.  
+- **Returns:**  
+  - `x`: Grid points  
+  - `y`: Solution values  
+
+---
+
+#### 8. `runge_kutta(x_start, x_end, y_0, n, f, plotchoose)`
+Solves an ODE with **Runge–Kutta 4th order method**.  
+- **Returns:**  
+  - `x_values`: Grid points  
+  - `y_values`: Solution values  
+
+---
+
+#### 9. `systems_of_ODE(system, y0, t)`
+Solves a **system of ODEs** using Runge–Kutta 4th order.  
+- **Args:**  
+  - `system`: Function describing the ODE system  
+  - `y0`: Initial conditions (list or array)  
+  - `t`: Array of time/grid points  
+- **Returns:**  
+  - `y`: Solution array with shape `(len(t), len(y0))`  
+
+---
+
 
 ## Boundary Value Problem Solver
 
@@ -231,6 +331,7 @@ Solves a BVP using the **shooting method**.
   - `y`: Solution values  
 
 ---
+
 
 
 
