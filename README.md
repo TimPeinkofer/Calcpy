@@ -167,6 +167,101 @@ Constructs cubic splines for interpolation.
 
 ---
 
+## Numerical Differentiation Methods
+
+This module implements different methods for approximating the **first derivative** of a function:
+
+- **Central Differences (4th-order accurate)**  
+- **Richardson Extrapolation**  
+- **Spline-Based Derivative Calculation**  
+
+The functions rely on direct function evaluations and cubic spline interpolation for smooth approximations.
+
+---
+
+### Functions
+
+#### `Central_diff_first_deri(x, h, func)`
+Computes the first derivative using the **central difference method** with 4th-order accuracy.
+
+**Args:**
+- `x (float)`: Point at which the derivative is evaluated  
+- `h (float)`: Step size  
+- `func (function)`: Function to be differentiated  
+
+**Returns:**
+- `float`: Approximation of the derivative at `x`  
+
+---
+
+#### `F(h, x, func)`
+Computes the **first-order central difference approximation** of the derivative.  
+Used internally for Richardson extrapolation.
+
+---
+
+#### `psi(h, x, func)`
+Applies the Richardson extrapolation formula to improve the accuracy of the derivative approximation.  
+Used internally by `Richardson`.
+
+---
+
+#### `Richardson(x, h, func)`
+Computes the derivative using **Richardson extrapolation**, which accelerates convergence by combining results from multiple step sizes.
+
+**Args:**
+- `x (float)`: Point at which the derivative is evaluated  
+- `h (float)`: Step size  
+- `func (function)`: Function to be differentiated  
+
+**Returns:**
+- `float`: Richardson-extrapolated derivative at `x`  
+
+---
+
+#### `spline_derivative(i, x_val, x, func)`
+Computes the derivative of a function using **cubic spline interpolation** on the interval `[x[i], x[i+1]]`.
+
+**Args:**
+- `i (int)`: Index such that `x[i] <= x_val <= x[i+1]`  
+- `x_val (float)`: Point at which the derivative is evaluated  
+- `x (ndarray)`: Array of interpolation nodes  
+- `func (function)`: Function providing values `f(x)`  
+
+**Returns:**
+- `float`: Derivative of the spline at `x_val`  
+- `None`: If `x_val` is outside the interval or no spline solution is found  
+
+---
+
+### Example Usage
+
+```python
+import numpy as np
+from Differentiation import Central_diff_first_deri, Richardson, spline_derivative
+
+# Define test function
+f = np.sin
+x0 = np.pi / 4
+h = 0.01
+x_nodes = np.linspace(0, np.pi, 5)
+
+# Central difference derivative
+d_central = Central_diff_first_deri(x0, h, f)
+
+# Richardson extrapolation derivative
+d_rich = Richardson(x0, h, f)
+
+# Spline derivative on interval [x[1], x[2]]
+d_spline = spline_derivative(1, x0, x_nodes, f)
+
+print("Central difference:", d_central)
+print("Richardson:", d_rich)
+print("Spline derivative:", d_spline)
+print("Exact derivative:", np.cos(x0))
+```
+
+
 ## Numerical ODE Solvers
 
 This project provides several numerical algorithms for solving **ordinary differential equations (ODEs)** and systems of ODEs.  
@@ -331,6 +426,7 @@ Solves a BVP using the **shooting method**.
   - `y`: Solution values  
 
 ---
+
 
 
 
