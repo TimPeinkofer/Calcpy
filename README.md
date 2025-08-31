@@ -37,6 +37,83 @@ The following types of problems will be addressed in the bibliography:
 
 ## WOP
 
+## Eigenvalue and Eigenvector Computation
+
+This project implements numerical methods for computing eigenvalues and eigenvectors of a matrix using **power iteration** and **Aitken's delta-squared acceleration**.  
+Both the matrix and its inverse are considered to approximate the **largest** and **smallest** eigenvalues.
+
+---
+
+### Functions
+
+### 1. `matrix_vector(N, Matrix, Vector)`
+Multiplies a square matrix by a vector.  
+- **Args:**  
+  - `N`: Size of the square matrix  
+  - `Matrix`: Input matrix `(N x N)`  
+  - `Vector`: Input vector `(N,)`  
+- **Returns:**  
+  - Resulting vector `(N,)`
+
+---
+
+#### 2. `Eigenvalue_calc(mat, vec, Iteration)`
+Computes the dominant eigenvalue and eigenvector using the **power iteration method**.  
+- **Args:**  
+  - `mat`: Input matrix  
+  - `vec`: Initial guess vector  
+  - `Iteration`: Number of iterations  
+- **Returns:**  
+  - `(eigenvalue, eigenvector)`
+
+---
+
+#### 3. `Eigenvalues(mat, vec, Iteration)`
+Computes eigenvalues and eigenvectors of a matrix and its inverse.  
+- **Args:**  
+  - `mat`: Input matrix  
+  - `vec`: Initial guess vector  
+  - `Iteration`: Number of iterations  
+- **Returns:**  
+  - `eigenvalues`: List of eigenvalues  
+  - `eigenvectors`: List of eigenvectors  
+- **Note:**  
+  - For a regular matrix, this gives the **largest** eigenvalue (via `mat`) and the **smallest** eigenvalue (via `inv(mat)`).
+
+---
+
+#### 4. `Aitken(Eigenvalues)`
+Applies **Aitken’s delta-squared process** to accelerate convergence.  
+- **Args:**  
+  - `Eigenvalues`: Sequence of approximated eigenvalues  
+- **Returns:**  
+  - Accelerated eigenvalue approximation  
+
+---
+
+#### 5. `eigenvalue_calc_aitken(mat, vec, Iteration)`
+Computes the dominant eigenvalue and eigenvector using **power iteration with Aitken acceleration**.  
+- **Args:**  
+  - `mat`: Input matrix  
+  - `vec`: Initial guess vector  
+  - `Iteration`: Number of iterations  
+- **Returns:**  
+  - `(eigenvalue, eigenvector)`
+
+---
+
+#### 6. `Eigenvalues_Aitken(mat, vec, Iteration)`
+Computes eigenvalues and eigenvectors of a matrix (and its inverse) using Aitken’s method.  
+- **Args:**  
+  - `mat`: Input matrix  
+  - `vec`: Initial guess vector  
+  - `Iteration`: Number of iterations  
+- **Returns:**  
+  - `eigenvalues`: List of eigenvalues  
+  - `eigenvectors`: List of eigenvectors  
+
+---
+
 ## Cubic Spline Interpolation
 
 This project implements a **cubic spline interpolation** algorithm in Python using **NumPy**.  
@@ -154,6 +231,7 @@ Solves a BVP using the **shooting method**.
   - `y`: Solution values  
 
 ---
+
 
 
 
