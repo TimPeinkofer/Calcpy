@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
 
 from BVP import Matrix_method, solve_by_shooting
 
-def test_ode(x, y):
+def ode_exp(x, y):
     """ Beispielhafte einfache ODE für den Test."""
     dydx = [y[1], -y[0]]  # y'' = -y -> Schwingungsgleichung
     return np.array(dydx)
@@ -36,7 +36,7 @@ class TestBoundaryValueMethods(unittest.TestCase):
         v0 = [0, 2]  # Erste Ableitung, Schätzwerte
         max_iter = 10
         
-        v_corr, x, y = solve_by_shooting(test_ode, x1, x2, n, v0, u1, u2, max_iter)
+        v_corr, x, y = solve_by_shooting(ode_exp, x1, x2, n, v0, u1, u2, max_iter)
         
         self.assertAlmostEqual(y[-1, 0], u2, 2, "Randbedingung u2 nicht erfüllt.")
         self.assertEqual(len(x), n + 1, "Anzahl der Gitterpunkte stimmt nicht.")
