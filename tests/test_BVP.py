@@ -10,6 +10,7 @@ from BVP import Matrix_method, solve_by_shooting
 
 def ode_exp(x, y):
     """ Beispielhafte einfache ODE für den Test."""
+    x = 0
     dydx = [y[1], -y[0]]  # y'' = -y -> Schwingungsgleichung
     return np.array(dydx)
 
