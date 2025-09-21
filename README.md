@@ -114,7 +114,7 @@ Computes eigenvalues and eigenvectors of a matrix (and its inverse) using Aitken
 
 ---
 
-### Cubic Spline Interpolation
+## Cubic Spline Interpolation
 
 This project implements a **cubic spline interpolation** algorithm in Python using **NumPy**.  
 The algorithm constructs and solves a linear system to determine the spline coefficients, allowing smooth interpolation of a given function across a set of points.
@@ -426,6 +426,7 @@ Solves a BVP using the **shooting method**.
   - `y`: Solution values  
 
 ---
+
 
 
 
