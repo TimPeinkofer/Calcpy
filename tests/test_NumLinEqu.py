@@ -3,8 +3,8 @@ import numpy as np
 import sys
 import os
 
-# Add the path to the calcpy module
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Calcpy')))
+# Add the path to the NumKit module
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'NumKit')))
 
 from NumLinEqu import Gauss_elimination, gauss_seidel, inverse_matrix, Gauss_Jordan, overrelaxation, overrelax_calc, determinant
 

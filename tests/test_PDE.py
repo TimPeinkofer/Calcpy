@@ -5,7 +5,7 @@ import os
 from unittest.mock import patch
 
 # Add the path to the module
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Calcpy')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'NumKit')))
 
 import PDE
 

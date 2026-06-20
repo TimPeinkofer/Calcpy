@@ -4,7 +4,7 @@ import sys
 import os
 
 # Add the path to the module
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Calcpy')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'NumKit')))
 
 from NumEigenv import matrix_vector, Eigenvalue_calc, Eigenvalues, Aitken, eigenvalue_calc_aitken, Eigenvalues_Aitken
 
