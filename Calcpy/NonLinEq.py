@@ -159,3 +159,99 @@ def bisection_method(x1: float, x2: float, f, max_iter: int, eps=1e-6) -> float:
 
     print("Did not converge.")
     return None
+
+import numpy as np
+
+def jacobi_method(A: np.ndarray, b: np.ndarray, init_val: list, max_iter: int, tol=1e-6) -> np.ndarray:
+    """
+    Solve a linear system using the iterative Jacobi method.
+    
+    In contrast to Gauss-Seidel, the Jacobi method uses only the values 
+    from the previous iteration step to calculate the new approximations.
+
+    Args:
+        A (numpy.ndarray): Coefficient matrix.
+        b (numpy.ndarray): Right-hand side vector.
+        init_val (list): Initial guess for the solution vector x.
+        max_iter (int): Maximum number of iterations.
+        tol (float): Convergence tolerance.
+
+    Returns:
+        numpy.ndarray: Solution vector if convergence is achieved.
+    """
+    rows, cols = A.shape
+    if rows != cols:
+        raise ValueError("Coefficient matrix A must be square.")
+        
+    x_old = np.array(init_val, dtype=float)
+    x_new = np.zeros_like(x_old)
+
+    for iteration in range(max_iter):
+        for i in range(rows):
+            if A[i, i] == 0:
+                raise ValueError("Diagonal element is zero, cannot proceed with Jacobi method.")
+            
+            # Sum over all j != i
+            s = 0.0
+            for j in range(cols):
+                if j != i:
+                    s += A[i, j] * x_old[j]
+            
+            x_new[i] = (b[i] - s) / A[i, i]
+
+        # Check for convergence (using infinity norm)
+        if np.linalg.norm(x_new - x_old, ord=np.inf) < tol:
+            return x_new
+
+        # Update x_old for the next iteration
+        x_old = x_new.copy()
+
+    raise RuntimeError("Jacobi method did not converge within the maximum number of iterations.")
+
+
+def Gauss_elimination_pivoted(matrix: np.ndarray, vector: np.ndarray) -> np.ndarray:
+    """
+    Function for Gaussian elimination using partial pivoting to reduce numerical errors.
+    
+    Swaps rows to ensure the largest absolute value in the current column 
+    becomes the pivot element, minimizing floating-point inaccuracies.
+
+    Args:
+        matrix (numpy.ndarray): Coefficient matrix.
+        vector (numpy.ndarray): Right-hand side vector.
+
+    Returns:
+        x (numpy.ndarray): Solution vector.
+    """
+    U_Matrix = np.copy(matrix).astype(float)
+    U_vector = np.copy(vector).astype(float)
+    rows, columns = U_Matrix.shape
+    x = np.zeros(rows)
+    
+    # Forward elimination with partial pivoting
+    for i in range(rows - 1):
+        # --- NEW: Partial Pivoting ---
+        # Find the row with the largest absolute value in the current column i
+        max_row_index = i + np.argmax(np.abs(U_Matrix[i:rows, i]))
+        
+        if max_row_index != i:
+            # Swap the current row i with the row containing the maximum value
+            U_Matrix[[i, max_row_index]] = U_Matrix[[max_row_index, i]]
+            U_vector[[i, max_row_index]] = U_vector[[max_row_index, i]]
+        # -----------------------------
+            
+        if np.isclose(U_Matrix[i, i], 0):
+            raise ValueError("Matrix is singular or nearly singular.")
+
+        for j in range(i + 1, rows):
+            factor = U_Matrix[j, i] / U_Matrix[i, i]
+            U_Matrix[j] -= factor * U_Matrix[i]
+            U_vector[j] -= factor * U_vector[i]
+
+    # Back substitution (same as before)
+    for i in range(rows - 1, -1, -1):
+        if np.isclose(U_Matrix[i, i], 0):
+            raise ValueError("Matrix is singular or nearly singular.")
+        x[i] = (U_vector[i] - np.dot(U_Matrix[i, i + 1:], x[i + 1:])) / U_Matrix[i, i]
+    
+    return x
