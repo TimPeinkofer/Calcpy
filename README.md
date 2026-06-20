@@ -1,6 +1,6 @@
-# Calcpy
+# NumKit
 
-[![CI](https://github.com/TimPeinkofer/Calcpy/actions/workflows/ci.yml/badge.svg)](https://github.com/TimPeinkofer/Calcpy/actions/workflows/ci.yml)
+[![CI](https://github.com/TimPeinkofer/NumKit/actions/workflows/ci.yml/badge.svg)](https://github.com/TimPeinkofer/NumKit/actions/workflows/ci.yml)
 
 A simple Python library for numerical mathematical calculations and its utility functions.
 
@@ -11,14 +11,14 @@ Thanks to the modern package configuration, `numpy` and `matplotlib` will be ins
 ### Option 1: Direct Installation (Recommended for Users)
 You can install the library directly from GitHub using `pip`:
 ```bash
-pip install git+[https://github.com/TimPeinkofer/Calcpy.git](https://github.com/TimPeinkofer/Calcpy.git)
+pip install git+[https://github.com/TimPeinkofer/NumKit.git](https://github.com/TimPeinkofer/NumKit.git)
 ```
 
 ### Option 2: Local Installation (For Developers)
 If you want to modify the code, clone the repository and install it in editable mode:
 ```bash
-git clone [https://github.com/TimPeinkofer/Calcpy.git](https://github.com/TimPeinkofer/Calcpy.git)
-cd Calcpy
+git clone [https://github.com/TimPeinkofer/NumKit.git](https://github.com/TimPeinkofer/NumKit.git)
+cd NumKit
 pip install -e .
 ```
 
