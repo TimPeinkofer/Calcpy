@@ -1,4 +1,4 @@
-name: Calcpy CI
+name: NumKit CI
 
 on:
   push:
