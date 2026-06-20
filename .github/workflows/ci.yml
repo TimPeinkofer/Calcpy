@@ -1,0 +1,35 @@
+name: Calcpy CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Testet deine Bibliothek auf den gängigsten modernen Python-Versionen
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+    - name: Code auschecken
+      uses: actions/checkout@v4
+
+    - name: Python ${{ matrix.python-version }} einrichten
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Abhängigkeiten installieren
+      run: |
+        python -m pip install --upgrade pip
+        # Installiert dein Paket lokal inklusive numpy und matplotlib aus der pyproject.toml
+        pip install .
+
+    - name: Tests mit unittest ausführen
+      run: |
+        python -m unittest discover -s tests
