@@ -10,7 +10,8 @@ currently being supported with security updates.
 | v0.1-alpha | no |
 | v0.2-alpha | no |
 | v0.2-beta | no |
-| v0.2-gamma | yes |
+| v0.2-gamma | no |
+| v0.9 | yes |
 
 
 
