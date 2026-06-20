@@ -2,7 +2,16 @@
 
 [![CI](https://github.com/TimPeinkofer/NumKit/actions/workflows/ci.yml/badge.svg)](https://github.com/TimPeinkofer/NumKit/actions/workflows/ci.yml)
 
-A simple Python library for numerical mathematical calculations and its utility functions.
+## Why NumKit?
+
+While giant libraries like SciPy provide powerful "black-box" solvers optimized in C, **NumKit** bridges the gap between complex engineering and educational clarity. 
+
+* **Pure Python & Readable:** No obscured code. NumKit implements classic, transparent textbook algorithms (from *Newton-Halley* and *Aitken acceleration* to *Adams Predictor-Corrector* and *PDE solvers*) that you can actually read, learn from, and debug.
+* **Batteries Included (Built-in Plots):** Forget writing repetitive boilerplate code. NumKit solvers come with integrated visual plotting capabilities (`plotchoose`) out of the box, allowing you to visualize ODE trajectories and numerical results instantly.
+* **All-in-One Educational Toolkit:** Instead of importing dozens of sub-modules, NumKit unifies the entire roadmap of numerical mathematics—linear algebra, interpolation, integration, differentiation, BVPs, and PDEs—under a single, intuitive, and beginner-friendly API.
+
+> **NumKit is the lightweight, didactic alternative for students, engineers, and developers who don't just want a number, but want to understand the physics and math behind the solution.**
+
 
 ## Installation
 
