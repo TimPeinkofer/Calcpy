@@ -1,7 +1,8 @@
 import numint, numdiff
+from typing import Callable
 
 class IntegrationandDiffMethodError:
-    def __init__(self, method, a: float, b: float, func):
+    def __init__(self, method, a: float, b: float, func:Callable):
         """
         Initialisiert die Integrationsmethode.
 
@@ -43,7 +44,7 @@ class IntegrationandDiffMethodError:
         return abs(approx_value - self.exact)
 
 
-def error(method, a: float, b: float, func, approx_result: float) -> float:
+def error(method, a: float, b: float, func:Callable, approx_result: float) -> float:
     """
     Berechnet den Fehler der numerischen Integration.
 

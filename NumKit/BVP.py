@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from ODE import runge_kutta
 from NonLinEq import linear_interpolation
+from typing import Callable
 
 def Matrix(h: float, n: int) -> np.ndarray:
     """
@@ -75,7 +76,7 @@ def Matrix_method(x0: float, xn: float, n: int, y0: float, yn: float) -> np.ndar
     
     return y
 
-def solve_by_shooting(ode: callable, x_1: float, x_2: float, n: int, v_0: list, u_1: float, u_2: float, max_iter: int) -> tuple[float, np.ndarray, np.ndarray]:
+def solve_by_shooting(ode: Callable, x_1: float, x_2: float, n: int, v_0: list, u_1: float, u_2: float, max_iter: int) -> tuple[float, np.ndarray, np.ndarray]:
     """
     Solves a boundary value problem using the shooting method.
     

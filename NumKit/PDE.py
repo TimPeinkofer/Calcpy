@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+from typing import Callable
 
 # ---------- Plot-Funktionen ----------
 
-def plot_x_u_for_different_t(x_values, t_values, u):
+def plot_x_u_for_different_t(x_values: np.ndarray, t_values: np.ndarray, u: np.ndarray) -> None:
     """
     Plottet u(x,t) als x-u-Diagramm für verschiedene Zeitpunkte.
 
@@ -24,7 +24,7 @@ def plot_x_u_for_different_t(x_values, t_values, u):
     plt.show()
 
 
-def mesh_plot_3D(x_val, y_val, z_val, u_val):
+def mesh_plot_3D(x_val: np.ndarray, y_val: np.ndarray, z_val: np.ndarray, u_val: np.ndarray)-> None:
     """
     3D-Scatterplot der Lösung.
 
@@ -46,7 +46,7 @@ def mesh_plot_3D(x_val, y_val, z_val, u_val):
     plt.show()
 
 
-def mesh_plot_2D(x_val, y_val, u_val):
+def mesh_plot_2D(x_val: np.ndarray, y_val: np.ndarray, u_val: np.ndarray)->None:
     """
     2D-Konturplot der Lösung.
 
@@ -66,7 +66,7 @@ def mesh_plot_2D(x_val, y_val, u_val):
 
 # ---------- Elliptischer Solver 2D ----------
 
-def elliptic_solver_laplace_2D(bc, h, x_bounds, y_bounds, g=lambda x, y: 0, maxiter=100):
+def elliptic_solver_laplace_2D(bc: list[float], h: float, x_bounds: list[float], y_bounds: list[float], g: Callable =lambda x, y: 0, maxiter: int=100)-> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Löser für die Laplace-/Poisson-Gleichung in 2D mit Gauss-Seidel.
 
@@ -108,7 +108,7 @@ def elliptic_solver_laplace_2D(bc, h, x_bounds, y_bounds, g=lambda x, y: 0, maxi
 
 # ---------- Elliptischer Solver 3D ----------
 
-def elliptic_solver_laplace_3D(bc, h, x_bounds, y_bounds, z_bounds, g=lambda x, y, z: 0, maxiter=100):
+def elliptic_solver_laplace_3D(bc: list[float], h: float, x_bounds: list[float], y_bounds: list[float], z_bounds: list[float], g: Callable=lambda x, y, z: 0, maxiter: int=100)->tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Löser für die Laplace-/Poisson-Gleichung in 3D mit Gauss-Seidel.
 
@@ -154,7 +154,7 @@ def elliptic_solver_laplace_3D(bc, h, x_bounds, y_bounds, z_bounds, g=lambda x, 
 
 # ---------- Parabolischer Solver (explizit) ----------
 
-def parabolic_explicit_solver(x_bounds, t_bounds, bc_t, func, h, alpha):
+def parabolic_explicit_solver(x_bounds: list[float], t_bounds: list[float], bc_t: list[float|Callable], func: Callable, h: float, alpha: float)->tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Expliziter Finite-Differenzen-Löser für die Wärmeleitungsgleichung u_t = alpha^2 u_xx.
 
@@ -191,7 +191,7 @@ def parabolic_explicit_solver(x_bounds, t_bounds, bc_t, func, h, alpha):
 
 # ---------- Hyperbolischer Solver ----------
 
-def hyperbolic_solver(x_bounds, t_bounds, bc_t, func, h, alpha):
+def hyperbolic_solver(x_bounds: list[float], t_bounds: list[float], bc_t: list[float|Callable], func: Callable, h: float, alpha: float)->tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Löser für die Wellengleichung u_tt = alpha^2 u_xx.
 

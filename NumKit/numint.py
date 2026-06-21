@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Callable
 
 
 gauss_legendre_data = {
@@ -65,7 +66,7 @@ def precalc(n: int, a: float, b: float)-> tuple[float, list]:
     return h, x_values
 
 
-def Simpson_1_3(n: int, a: float, b: float, func) -> float:
+def Simpson_1_3(n: int, a: float, b: float, func:Callable) -> float:
     """
     Calculating the integral of a function for given bounds via Simpson 1/3
 
@@ -73,7 +74,7 @@ def Simpson_1_3(n: int, a: float, b: float, func) -> float:
         n (int): Number of subintervals
         a (float): Lower bound of the integral
         b (float): Upper bound of the integral
-        func : Function that needs to be integrated
+        func (Callable): Function that needs to be integrated
     
     Returns:
         result (float): Value of the integration
@@ -93,7 +94,7 @@ def Simpson_1_3(n: int, a: float, b: float, func) -> float:
     return result
 
 
-def Romberg(n: int, a: float, b: float, func) -> float:
+def Romberg(n: int, a: float, b: float, func:Callable) -> float:
     """
     Calculating the integral of a function for given bounds via Romberg
 
@@ -101,7 +102,7 @@ def Romberg(n: int, a: float, b: float, func) -> float:
         n (int): Number of subintervals
         a (float): Lower bound of the integral
         b (float): Upper bound of the integral
-        func : Function that needs to be integrated
+        func (Callable): Function that needs to be integrated
     
     Returns:
         value (float): Value of the integration
@@ -117,7 +118,7 @@ def transform_G_L(x, b, a):
 
 
 # Gauß-Legendre function
-def Gauss_legendre(a: float, b: float, n: int, func) -> float:
+def Gauss_legendre(a: float, b: float, n: int, func:Callable) -> float:
     """
     Calculating the integral of a function for given bounds via Gauß-Legendre
 
@@ -125,7 +126,7 @@ def Gauss_legendre(a: float, b: float, n: int, func) -> float:
         a (float): Lower bound of the integral
         b (float): Upper bound of the integral
         n (int): Number of subintervals
-        func : Function that needs to be integrated
+        func (Callable): Function that needs to be integrated
     
     Returns:
         res (float): Value of the integration
@@ -142,7 +143,7 @@ def Gauss_legendre(a: float, b: float, n: int, func) -> float:
     return res
 
 
-def Newton_cotes(n: int, a: float, b: float, func) -> float:
+def Newton_cotes(n: int, a: float, b: float, func:Callable) -> float:
     """
     Calculating the integral of a function for given bounds via Newton-Cotes
 
@@ -150,7 +151,7 @@ def Newton_cotes(n: int, a: float, b: float, func) -> float:
         a (float): Lower bound of the integral
         b (float): Upper bound of the integral
         n (int): Number of subintervals
-        func : Function that needs to be integrated
+        func (Callable): Function that needs to be integrated
     
     Returns:
         sum_integral (float): Value of the integration
@@ -165,7 +166,7 @@ def Newton_cotes(n: int, a: float, b: float, func) -> float:
     return sum_integral
 
 
-def Trapezoidal(n: int, a: float, b: float, func) -> float:
+def Trapezoidal(n: int, a: float, b: float, func:Callable) -> float:
     """
     Calculating the integral of a function for given bounds via Trapezoidal rule
 
@@ -173,7 +174,7 @@ def Trapezoidal(n: int, a: float, b: float, func) -> float:
         a (float): Lower bound of the integral
         b (float): Upper bound of the integral
         n (int): Number of subintervals
-        func : Function that needs to be integrated
+        func (Callable): Function that needs to be integrated
     
     Returns:
         I (float): Value of the integration
@@ -185,7 +186,7 @@ def Trapezoidal(n: int, a: float, b: float, func) -> float:
     return I
 
 
-def Simpson_3_8(n: int, a: float, b: float, func) -> float:
+def Simpson_3_8(n: int, a: float, b: float, func:Callable) -> float:
     """
     Calculating the integral of a function for given bounds via Simpson's 3/8 rule
 
@@ -193,7 +194,7 @@ def Simpson_3_8(n: int, a: float, b: float, func) -> float:
         n (int): Number of subintervals
         a (float): Lower bound of the integral
         b (float): Upper bound of the integral
-        func : Function that needs to be integrated
+        func (Callable): Function that needs to be integrated
     
     Returns:
         result (float): Value of the integration

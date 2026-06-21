@@ -1,9 +1,24 @@
 import numpy as np
+from typing import Callable, Optional
 
 def h(i, x):
     return x[i + 1] - x[i]  # Schrittweite zwischen den Punkten
 
-def cubic_splines(n, x, func):
+def cubic_splines(n: int, x: np.ndarray, func: Callable) -> tuple[Optional[np.ndarray], Optional[np.ndarray], Optional[np.ndarray]]:
+    """
+    Constructs cubic splines for interpolation.
+
+    Args:
+        n (int): Number of intervals (len(x) - 1).
+        x (np.ndarray): Array of grid points.
+        func (Callable): Function to evaluate at grid points.
+
+    Returns:
+        tuple: A tuple containing (matrix, vec, solution), where 'matrix' is the 
+               coefficient matrix, 'vec' is the right-hand side vector, and 'solution' 
+               is the array of approximated spline second derivatives. Returns None 
+               for elements if the calculation fails.
+    """
     values = func(x)
     if n < 2:
         print("Nicht genügend Punkte für Splines")
@@ -51,4 +66,3 @@ def cubic_splines(n, x, func):
     except np.linalg.LinAlgError:
         print("Keine Lösung vorhanden")
         return matrix, vec, None
- 

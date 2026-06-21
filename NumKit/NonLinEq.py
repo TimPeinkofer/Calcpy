@@ -1,6 +1,7 @@
 import numpy as np
+from typing import Callable
 
-def newtons_method(f, df, x0: float, max_iter: int, epsilon=1e-6) -> float:
+def newtons_method(f: Callable, df: Callable, x0: float, max_iter: int, epsilon: float=1e-6) -> float:
     """
     Find the root of a function using Newton's method.
 
@@ -32,7 +33,7 @@ def newtons_method(f, df, x0: float, max_iter: int, epsilon=1e-6) -> float:
     return None
 
 
-def linear_interpolation(f, x0: float, x1: float, max_iter: int, epsilon=1e-6) -> float:
+def linear_interpolation(f: Callable, x0: float, x1: float, max_iter: int, epsilon: float=1e-6) -> float:
     """
     Find the root of a function using linear interpolation.
 
@@ -65,7 +66,7 @@ def linear_interpolation(f, x0: float, x1: float, max_iter: int, epsilon=1e-6) -
     return None
 
 
-def solve_fixed_point(f1, f2, x_init: float, y_init: float, max_iter: int, tol=1e-8) -> tuple[float,float]:
+def solve_fixed_point(f1: Callable, f2: Callable, x_init: float, y_init: float, max_iter: int, tol=1e-8) -> tuple[float,float]:
     """
     Solve a system of equations using fixed-point iteration.
 
@@ -95,7 +96,7 @@ def solve_fixed_point(f1, f2, x_init: float, y_init: float, max_iter: int, tol=1
     print("Did not converge.")
     return None, None
 
-def newton_halley(f, df, d2f, x0: float, max_iter: int, epsilon=1e-6) -> float:
+def newton_halley(f: Callable, df: Callable, d2f: Callable, x0: float, max_iter: int, epsilon: float=1e-6) -> float:
     """
     Find the root of a function using Newton-Halley method.
 
@@ -129,7 +130,7 @@ def newton_halley(f, df, d2f, x0: float, max_iter: int, epsilon=1e-6) -> float:
     return None
 
 
-def bisection_method(x1: float, x2: float, f, max_iter: int, eps=1e-6) -> float:
+def bisection_method(x1: float, x2: float, f: Callable, max_iter: int, eps: float=1e-6) -> float:
     """
     Solving nonlinear equations with bisection method.
 
@@ -162,7 +163,7 @@ def bisection_method(x1: float, x2: float, f, max_iter: int, eps=1e-6) -> float:
 
 import numpy as np
 
-def jacobi_method(A: np.ndarray, b: np.ndarray, init_val: list, max_iter: int, tol=1e-6) -> np.ndarray:
+def jacobi_method(A: np.ndarray, b: np.ndarray, init_val: list, max_iter: int, tol: float=1e-6) -> np.ndarray:
     """
     Solve a linear system using the iterative Jacobi method.
     

@@ -66,7 +66,7 @@ def overrelaxation(A: np.ndarray, b: np.ndarray, Max_iterations: int):
         print(f"Best solution found with w = {best_w:.1f}")
     return best_solution
 
-def overrelax_calc(m: np.ndarray, vector: np.ndarray, iterations: int, w: float, tol=1e-6) -> np.ndarray:
+def overrelax_calc(m: np.ndarray, vector: np.ndarray, iterations: int, w: float, tol: float=1e-6) -> np.ndarray:
     """
     Perform over-relaxation calculation for a given relaxation factor.
 
@@ -134,7 +134,7 @@ def determinant(matrix: np.ndarray) -> float:
     return det * (-1) ** swaps
 
 
-def gauss_seidel(m: np.ndarray, vector: np.ndarray, init_val: list,max_iter: int, tol=1e-6) -> np.ndarray:
+def gauss_seidel(m: np.ndarray, vector: np.ndarray, init_val: list,max_iter: int, tol: float=1e-6) -> np.ndarray:
     """
     Solve a linear system using the Gauss-Seidel method.
 

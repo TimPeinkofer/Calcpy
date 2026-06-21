@@ -1,6 +1,6 @@
 import numpy as np
 
-def matrix_vector(N, Matrix, Vector):
+def matrix_vector(N: np.ndarray, Matrix: np.ndarray, Vector: np.ndarray) -> np.ndarray:
     """
     Multiply a matrix by a vector.
 
@@ -18,7 +18,7 @@ def matrix_vector(N, Matrix, Vector):
             Solution[i] += Matrix[i][j] * Vector[j]
     return Solution
 
-def Eigenvalue_calc(mat, vec, Iteration):
+def Eigenvalue_calc(mat: np.ndarray, vec: np.ndarray, Iteration: int) -> tuple[float, np.ndarray]:
     """
     Compute an eigenvalue and eigenvector using power iteration.
 
@@ -40,7 +40,7 @@ def Eigenvalue_calc(mat, vec, Iteration):
     eigenvector = vec
     return eigenvalue, eigenvector
 
-def Eigenvalues(mat, vec, Iteration):
+def Eigenvalues(mat: np.ndarray, vec: np.ndarray, Iteration: int)-> tuple[list[float], list[np.ndarray]]:
     """
     Compute eigenvalues and eigenvectors of a matrix and its inverse.
 
@@ -68,7 +68,7 @@ def Eigenvalues(mat, vec, Iteration):
 
     return eigenvalues, eigenvectors
 
-def Aitken(Eigenvalues):
+def Aitken(Eigenvalues: list[float])->float:
     """
     Apply Aitken's delta-squared process for accelerated convergence.
 
@@ -84,7 +84,7 @@ def Aitken(Eigenvalues):
         x_n, x_n1, x_n2 = Eigenvalues[-3], Eigenvalues[-2], Eigenvalues[-1]
         return x_n - (x_n1 - x_n) ** 2 / (x_n2 - 2 * x_n1 + x_n)
 
-def eigenvalue_calc_aitken(mat, vec, Iteration):
+def eigenvalue_calc_aitken(mat: np.ndarray, vec: np.ndarray, Iteration: int)->tuple[float, np.ndarray]:
     """
     Compute an eigenvalue and eigenvector using Aitken's method.
 
@@ -113,7 +113,7 @@ def eigenvalue_calc_aitken(mat, vec, Iteration):
 
     return eigenvalue, vec
 
-def Eigenvalues_Aitken(mat, vec, Iteration):
+def Eigenvalues_Aitken(mat: np.ndarray, vec: np.ndarray, Iteration: int)-> tuple[list[float],list[np.ndarray]]:
     """
     Compute eigenvalues and eigenvectors using Aitken's method.
 

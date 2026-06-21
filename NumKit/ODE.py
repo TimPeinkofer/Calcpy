@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from typing import Callable, Union
 
 def precalc(xm: float, x0: float, n: int):
     """
@@ -38,7 +39,7 @@ def sol_plot(x: np.array, y: np.array, plotchoose: bool):
         plt.grid(True)
         plt.show()
 
-def Heun(x0: float, xm: float, y0: float, n: int, f, plotchoose: bool):
+def Heun(x0: float, xm: float, y0: float, n: int, f:Callable, plotchoose: bool):
     """
     Numerical solution of ODE via Heun method.
 
@@ -66,7 +67,7 @@ def Heun(x0: float, xm: float, y0: float, n: int, f, plotchoose: bool):
     sol_plot(x, y, plotchoose)
     return x, y
 
-def adam_predictor(f, y_0: float, x_0: float, x_m: float, n: int, plotchoose: bool):
+def adam_predictor(f:Callable, y_0: float, x_0: float, x_m: float, n: int, plotchoose: bool):
     """
     Numerical solution of ODE via Adams-Bashforth method (predictor).
 
@@ -104,7 +105,7 @@ def adam_predictor(f, y_0: float, x_0: float, x_m: float, n: int, plotchoose: bo
     sol_plot(x, y_values, plotchoose)
     return x, y_values
 
-def adam_corrector(f, y_values: np.array, x: np.array, n: int, h: float, plotchoose: bool):
+def adam_corrector(f:Callable, y_values: np.array, x: np.array, n: int, h: float, plotchoose: bool):
     """
     Corrector method for Adams-Moulton method.
 
@@ -130,7 +131,7 @@ def adam_corrector(f, y_values: np.array, x: np.array, n: int, h: float, plotcho
     sol_plot(x, y_values, plotchoose)
     return y_values
 
-def adam_ode_int(f, y_0: float, x0: float, xm: float, n: int, plotchoose: bool):
+def adam_ode_int(f:Callable, y_0: float, x0: float, xm: float, n: int, plotchoose: bool):
     """
     Numerical solution of ODE via predictor-corrector method.
 
@@ -151,7 +152,7 @@ def adam_ode_int(f, y_0: float, x0: float, xm: float, n: int, plotchoose: bool):
     y_corr = adam_corrector(f, y_pred, x, n, h, plotchoose)
     return y_corr, y_pred
 
-def Adam(x0: float, xm: float, y0: float, n: int, f, plotchoose: bool):
+def Adam(x0: float, xm: float, y0: float, n: int, f:Callable, plotchoose: bool):
     """
     Numerical solution of ODE via Adams method.
 
@@ -180,7 +181,7 @@ def Adam(x0: float, xm: float, y0: float, n: int, f, plotchoose: bool):
     sol_plot(x, y, plotchoose)  # Plot the solution
     return x, y
 
-def runge_kutta(x_start: float, x_end: float, y_0: float, n: int, f, plotchoose: bool):
+def runge_kutta(x_start: float, x_end: float, y_0: float, n: int, f:Callable, plotchoose: bool):
     """
     Numerical solution of ODE via Runge-Kutta 4th order method.
 
@@ -215,7 +216,7 @@ def runge_kutta(x_start: float, x_end: float, y_0: float, n: int, f, plotchoose:
     return x_values, np.array(y_values)
 
 
-def systems_of_ODE(system, y0:list, t:list) -> list:
+def systems_of_ODE(system: Callable, y0: Union[list, np.ndarray], t: Union[list, np.ndarray]) -> np.ndarray:
     """
     ODE System solver based ona Runge-Kutta 4th order algorithm.
 
