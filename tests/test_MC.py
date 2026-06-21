@@ -6,64 +6,46 @@ import os
 # Add the path to the module
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'NumKit')))
 
-
+# Importiere die neuen Monte-Carlo-Methoden (Pfad anpassen, falls sie woanders liegen)
 from MC import Monte_Carlo, Monte_Carlo_nD
 
-# Stelle sicher, dass du velocity_verlet hier importierst (je nachdem, wo du es eingefügt hast)
-# from ODE import velocity_verlet
-
-class TestVelocityVerlet(unittest.TestCase):
+class TestMonteCarloMethods(unittest.TestCase):
     
-    def test_constant_acceleration(self):
-        """ Testet das System unter einer konstanten Kraft (z.B. Schwerkraft). """
-        x0, v0 = 0.0, 10.0
-        t_start, t_end, n = 0.0, 2.0, 100
-        m = 2.0
-        konstante_kraft = -9.81
+    def test_monte_carlo_1d(self):
+        n, a, b = 100000, 0, 10
+        expected = 333.3333333333333
         
-        # F(x) = konst
-        def force_func(x):
-            return konstante_kraft
-            
-        t, x, v = velocity_verlet(x0, v0, t_start, t_end, n, force_func, m=m, plotchoose=False)
+        # Seed setzen, damit der Test reproduzierbar bleibt
+        np.random.seed(42)
         
-        # Analytische Erwartungswerte
-        a = konstante_kraft / m
-        x_expected = x0 + v0 * t_end + 0.5 * a * t_end**2
-        v_expected = v0 + a * t_end
+        result, error = Monte_Carlo(n, a, b, lambda x: x**2)
         
-        # Array-Längen prüfen (Startwert + n Schritte = n + 1)
-        self.assertEqual(len(t), n + 1, "Anzahl der Zeitschritte stimmt nicht.")
-        self.assertEqual(len(x), n + 1, "Länge des Ortsvektors stimmt nicht.")
-        self.assertEqual(len(v), n + 1, "Länge des Geschwindigkeitsvektors stimmt nicht.")
+        # assertAlmostEqual mit delta (Toleranz), da Monte Carlo immer leicht schwankt
+        # Wir erlauben hier eine Abweichung von 5% vom Erwartungswert
+        toleranz = expected * 0.05
         
-        # Werte prüfen
-        self.assertAlmostEqual(x[-1], x_expected, places=5, msg="Position bei konstanter Beschleunigung weicht ab.")
-        self.assertAlmostEqual(v[-1], v_expected, places=5, msg="Geschwindigkeit bei konstanter Beschleunigung weicht ab.")
+        self.assertAlmostEqual(result, expected, delta=toleranz, msg=f"Integralwert weicht zu stark ab: {np.abs(result-expected)}")
+        self.assertGreater(error, 0, "Statistischer Fehler sollte größer als 0 sein.")
 
+    
+    def test_monte_carlo_nd(self):
+        n = 100000
+        bounds = [(0, 2), (0, 2)]
+        expected = 32 / 3  # ca. 10.666...
+        
+        # Testfunktion: f(x, y) = x^2 + y^2
+        def func_2d(vars):
+            return vars[0]**2 + vars[1]**2
+        
+        np.random.seed(42)
+        
+        result, error = Monte_Carlo_nD(n, bounds, func_2d)
+        
+        toleranz = expected * 0.05
+        
+        self.assertAlmostEqual(result, expected, delta=toleranz, msg=f"2D-Integralwert weicht zu stark ab: {np.abs(result-expected)}")
+        self.assertGreater(error, 0, "Statistischer Fehler sollte größer als 0 sein.")
 
-    def test_harmonic_oscillator_period(self):
-        """ Testet die Periodizität beim harmonischen Oszillator (Feder). """
-        x0, v0 = 1.0, 0.0  # Startet maximal ausgelenkt, aus der Ruhe
-        k = 1.0            # Federkonstante
-        m = 1.0            # Masse
-        
-        # Kreisfrequenz und Periodendauer
-        omega = np.sqrt(k / m)
-        T = 2 * np.pi / omega  # Exakt EINE volle Schwingung
-        
-        t_start, t_end, n = 0.0, T, 1000
-        
-        # F(x) = -k * x
-        def force_func(x):
-            return -k * x
-            
-        t, x, v = velocity_verlet(x0, v0, t_start, t_end, n, force_func, m=m, plotchoose=False)
-        
-        # Nach exakt einer Periode T muss das System wieder im Ausgangszustand sein
-        # Orte prüfen wir auf 2 Nachkommastellen, da numerische Integration minimale Rundungsfehler hat
-        self.assertAlmostEqual(x[-1], x0, places=2, msg="Position nach einer Schwingungsperiode nicht erhalten.")
-        self.assertAlmostEqual(v[-1], v0, places=2, msg="Geschwindigkeit nach einer Schwingungsperiode nicht erhalten.")
 
 if __name__ == "__main__":
     unittest.main()
