@@ -241,3 +241,55 @@ def systems_of_ODE(system: Callable, y0: Union[list, np.ndarray], t: Union[list,
         k4 = system(y[i - 1] + h * k3, t[i - 1] + h)
         y[i] = y[i - 1] + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6
     return y
+
+
+
+def velocity_verlet(x0: float, v0: float, t0: float, tm: float, n: int, f: Callable, m: float = 1.0, plotchoose: bool = False):
+    """
+    Numerical solution of Newton's equation of motion (m * x'' = F(x)) via Velocity-Verlet method.
+    Preserves energy in oscillatory systems significantly better than Runge-Kutta.
+
+    Args:
+      x0: float: initial position
+      v0: float: initial velocity
+      t0: float: initial time
+      tm: float: final time
+      n: int: number of steps
+      f: function: force function depending on position F(x)
+      m: float: mass of the particle (default: 1.0)
+      plotchoose: bool: choose to plot the solution or not
+
+    Returns:
+      t_values: np.array: time values
+      x_values: np.array: position values
+      v_values: np.array: velocity values
+    """
+    h = (tm - t0) / n
+    t_values = np.linspace(t0, tm, n + 1)
+    
+    x_values = np.zeros(n + 1)
+    v_values = np.zeros(n + 1)
+    
+    x_values[0] = x0
+    v_values[0] = v0
+    
+    # Initiale Beschleunigung a = F/m
+    a_current = f(x0) / m
+    
+    for i in range(n):
+        # 1. Neuen Ort berechnen
+        x_values[i + 1] = x_values[i] + v_values[i] * h + 0.5 * a_current * h**2
+        
+        # 2. Neue Beschleunigung am neuen Ort berechnen
+        a_next = f(x_values[i + 1]) / m
+        
+        # 3. Neue Geschwindigkeit berechnen
+        v_values[i + 1] = v_values[i] + 0.5 * (a_current + a_next) * h
+        
+        # Beschleunigung für den nächsten Schritt updaten
+        a_current = a_next
+
+    # Hier nutzen wir nun deine zentrale sol_plot Funktion!
+    sol_plot(t_values, x_values, plotchoose)
+
+    return t_values, x_values, v_values
