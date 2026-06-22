@@ -11,7 +11,8 @@ currently being supported with security updates.
 | v0.2-alpha | no |
 | v0.2-beta | no |
 | v0.2-gamma | no |
-| v0.9 | yes |
+| v0.9 | no |
+| v0.9.5 | yes |
 
 
 
