@@ -40,9 +40,10 @@ The following types of numerical problems are addressed in this library:
 4. Interpolation
 5. Integration
 6. Differentiation
-7. Ordinary differential equations
+7. Ordinary differential equations (Documentation in work
 8. Boundary and Initial value problems
 9. Hyperbolic, Parabolic and Elliptic Partial differential equations
+10. Monte-Carlo-Integration (Documentation in work)
 
 ---
 
